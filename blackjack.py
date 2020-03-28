@@ -16,33 +16,39 @@ deck1 = create_deck()
 def show_deck(deck):
     print(deck)
 
-show_deck(deck1)
+#show_deck(deck1)
 
 def shuffle_deck(deck):
     shuffle(deck)
     print(deck)
 
+card_values = {
+    'J':10, 'Q':10, 'K':10, 'A':11
+}
+
 #shuffle_deck(deck1)
 
-def choose_two(deck):
+def choose_card(deck):
     rand_num1 = randint(0,len(deck)-1)
     a = deck[rand_num1]
-    rand_num2 = randint(0, len(deck)-1)
-    b = deck[rand_num2]
-    print(a,b)
+    return a
 
-choose_two(deck1)
+def return_card_val(card):
+    if type(card) == int:
+        card_val = card
+    elif card == 'A':
+        card_val = 11
+    else:
+        card_val = 10
+    return card_val
 
 def simple_game(deck):
-    choose_two(deck)
+    show_deck(deck)
+    a = choose_card(deck)
+    print(f"Card: {a}")
+    b = return_card_val(a)
+    print(f"Value: {b}")
+
+
 
 simple_game(deck1)
-
-
-
-
-
-
-
-
-
