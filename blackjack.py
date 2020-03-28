@@ -1,9 +1,6 @@
 from random import randint
 from random import shuffle
 
-
-rand_num = randint(1,11)
-
 def create_deck():
     deck = []
     for i in range(2,11):
@@ -19,43 +16,33 @@ deck1 = create_deck()
 def show_deck(deck):
     print(deck)
 
-#show_deck(deck1)
+show_deck(deck1)
 
 def shuffle_deck(deck):
     shuffle(deck)
     print(deck)
 
-shuffle_deck(deck1)
+#shuffle_deck(deck1)
+
+def choose_two(deck):
+    rand_num1 = randint(0,len(deck)-1)
+    a = deck[rand_num1]
+    rand_num2 = randint(0, len(deck)-1)
+    b = deck[rand_num2]
+    print(a,b)
+
+choose_two(deck1)
+
+def simple_game(deck):
+    choose_two(deck)
+
+simple_game(deck1)
 
 
 
 
 
-'''
-def create_deck():
-    deck = []
-    for i in ['Diamonds', 'Clubs', 'Hearts', 'Spades']:
-        for j in range(2,11):
-            deck.append( {i:j} )
-    deck.append({'Diamonds': 'J'})
-    deck.append({'Diamonds': 'Q'})
-    deck.append({'Diamonds': 'K'})
-    deck.append({'Diamonds': 'A'})
-    deck.append({'Clubs': 'J'})
-    deck.append({'Clubs': 'Q'})
-    deck.append({'Clubs': 'K'})
-    deck.append({'Clubs': 'A'})
-    deck.append({'Hearts': 'J'})
-    deck.append({'Hearts': 'Q'})
-    deck.append({'Hearts': 'K'})
-    deck.append({'Hearts': 'A'})
-    return deck
 
-a = create_deck()
 
-def show_deck(deck):
-    for item in deck:
-        print(item)
 
-show_deck(a)
-'''
+
