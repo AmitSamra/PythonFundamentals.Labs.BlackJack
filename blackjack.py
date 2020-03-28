@@ -1,7 +1,8 @@
 from random import randint
+from random import shuffle
+
 
 rand_num = randint(1,11)
-#print(rand_num
 
 def create_deck():
     deck = []
@@ -18,7 +19,17 @@ deck1 = create_deck()
 def show_deck(deck):
     print(deck)
 
-show_deck(deck1)
+#show_deck(deck1)
+
+def shuffle_deck(deck):
+    shuffle(deck)
+    print(deck)
+
+shuffle_deck(deck1)
+
+
+
+
 
 '''
 def create_deck():
