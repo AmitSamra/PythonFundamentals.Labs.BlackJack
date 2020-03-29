@@ -58,7 +58,6 @@ class Blackjack(CardGame):
 
 
 class Player():
-
     def __init__(self, name, score = 0):
         super().__init__()
         self.name = name,
@@ -76,12 +75,12 @@ bj1 = Blackjack(1)
 deck1 = bj1.create_deck()
 
 player1 = Player('Apple')
-print(player1.score)
+#print(player1.score)
 
 dealer = Player('Dealer')
 
 
-def simple_game(deck, player, bj):
+def main_fcn(deck, player, bj):
 
     play_game = input("Are you ready to play? Y/N ")
     print("-"*50)
@@ -92,16 +91,15 @@ def simple_game(deck, player, bj):
 
     while game_on:
 
-        player.hand
+        player.hand = []
         player.total = 0
-        #show_deck(deck)
         acard1 = bj.choose_card(deck)
         player.hand.append(acard1)
         aval1 = bj.return_card_val(acard1)
 
         print("Initial Deal")
-        print("-"*25)
 
+        print("-"*25)
         print(f"Card: {acard1} Value: {aval1}")
         acard2 = bj.choose_card(deck)
         player.hand.append(acard2)
@@ -109,13 +107,16 @@ def simple_game(deck, player, bj):
         print(f"Card: {acard2} Value: {aval2}")
         player.total = aval1 + aval2
         print(f"Current hand {player.hand}")
-        print(f"Total: {player.total}")
+        print(f"Player Total: {player.total}")
         print("-"*25)
+
 
         if bj.win_check(player.total):
             player.add_score()
             print('You win!')
-            game_on = False
+            if not bj.replay():
+                print("-" * 25)
+                game_on = False
 
         else:
             while player.total < 21:
@@ -123,29 +124,79 @@ def simple_game(deck, player, bj):
                 if hs_choice == 1:
                     acard3 = bj.choose_card(deck)
                     player.hand.append(acard3)
-                    if acard3 == 'A' and player.total > 21:
+                    aval3 = bj.return_card_val(acard3)
+                    player.total += aval3
+
+                    '''if acard3 == 'A' and player.total > 21:
                         aval3 = 11
                     else:
                         aval3 = bj.return_card_val(acard3)
                     print(f"Card: {acard3} Value: {aval3}")
-                    player.total += aval3
+                    player.total += aval3'''
+
+                    if player.total > 21 and 'A' in player.hand:
+                        while player.total > 21:
+                            for i in player.hand:
+                                if i == 'A':
+                                    player.total -= 10
+                                    if player.total < 21:
+                                        break
+
+
+
                     print(f"Current hand {player.hand}")
-                    print(f"Total: {player.total}")
+                    print(f"Player Total: {player.total}")
                     print("-" * 25)
                     if bj.win_check(player.total):
                         player.add_score()
                         print('You win!')
                         game_on = False
+
                 elif hs_choice == 0:
-                    pass
-                else:
-                    game_on = False
+                    dealer.hand = []
+                    dealer.total = 0
+                    bcard1 = bj.choose_card(deck)
+                    dealer.hand.append(bcard1)
+                    bval1 = bj.return_card_val(bcard1)
+                    print(f"Card: {bcard1} Value: {bval1}")
+                    acard2 = bj.choose_card(deck)
+                    dealer.hand.append(acard2)
+                    bval2 = bj.return_card_val(acard2)
+                    print(f"Card: {acard2} Value: {bval2}")
+                    dealer.total = bval1 + bval2
+                    print(f"Current hand {dealer.hand}")
+                    print(f"Dealer Total: {dealer.total}")
+
+                    while dealer.total <= 17:
+                        bcard3 = bj.choose_card(deck)
+                        player.hand.append(bcard3)
+                        if bcard3 == 'A' and dealer.total > 21:
+                            bval3 = 11
+                        else:
+                            bval3 = bj.return_card_val(bcard3)
+
+                        if bj.win_check(dealer.total):
+                            dealer.add_score()
+                            print('You win!')
+                            game_on = False
+                            break
+                        elif (dealer.total > player.total) and (dealer.total <= 21):
+                            dealer.add_score()
+                            print('Dealer wins!')
+                            game_on = False
+                        else:
+                            print('Player wins!')
+                            game_on = False
+                            break
+                    else:
+                        game_on = False
             else:
                 print('You lose!')
-                #game_on = False
+
                 if not bj.replay():
-                    break
+                    print("-" * 25)
+                    game_on = False
     else:
         print('Goodbye')
 
-simple_game(deck1, player1, bj1)
+main_fcn(deck1, player1, bj1)
