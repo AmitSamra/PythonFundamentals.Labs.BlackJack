@@ -1,51 +1,71 @@
 from random import randint
 from random import shuffle
 
-def create_deck():
-    deck = []
-    for i in range(2,11):
-        deck.append(i)
-    deck.append('J')
-    deck.append('Q')
-    deck.append('K')
-    deck.append('A')
-    return deck
+class CardGame():
+   def __init__(self, deck_count):
+       self.deck_count = deck_count
 
+   def create_deck(self):
+       self.deck = []
+       for i in range(2, 11):
+        self.deck.append(i)
+       self.deck.append('J')
+       self.deck.append('Q')
+       self.deck.append('K')
+       self.deck.append('A')
+       return self.deck*self.deck_count
+
+   def show_deck(self, deck):
+       print(self.deck)
+
+   def shuffle_deck(self, deck):
+       shuffle(self.deck)
+       print(self.deck)
+
+   def replay(self, input):
+       return input("Do you want to play again? Y/N ").lower().startswith('y')
+
+class Blackjack(CardGame):
+    def __init__(self, deck_count):
+        super().__init__(deck_count)
+
+    def choose_card(self, deck):
+        rand_num1 = randint(0, len(self.deck) - 1)
+        a = self.deck[rand_num1]
+        return a
+
+    def hit_stay():
+        hs_op = int(input('Enter 1 to hit or 0 to stay: '))
+        return hs_op
+
+    def return_card_val(card):
+        if type(card) == int:
+            card_val = card
+        elif card == 'A':
+            card_val = 11
+        else:
+            card_val = 10
+        return card_val
+
+    def win_check(score):
+        return score == 21
+
+    def first_deal():
+        pass
+
+
+
+bj1 = Blackjack(2)
+a = bj1.create_deck()
+print(a)
+
+""""
 deck1 = create_deck()
 
-def show_deck(deck):
-    print(deck)
 
-def shuffle_deck(deck):
-    shuffle(deck)
-    print(deck)
 
-def choose_card(deck):
-    rand_num1 = randint(0,len(deck)-1)
-    a = deck[rand_num1]
-    return a
 
-def return_card_val(card):
-    if type(card) == int:
-        card_val = card
-    elif card == 'A':
-        card_val = 11
-    else:
-        card_val = 10
-    return card_val
 
-def hit_stay():
-    hs_op = int(input('Enter 1 to hit or 0 to stay: '))
-    return hs_op
-
-def first_deal():
-    pass
-
-def win_check(score):
-    return score == 21
-
-def replay(input):
-    return input("Do you want to play again? Y/N ").lower().startswith('y')
 
 def simple_game(deck):
 
@@ -111,3 +131,4 @@ def simple_game(deck):
         print('Goodbye')
 
 simple_game(deck1)
+"""
