@@ -1,5 +1,4 @@
 from random import randint
-from random import shuffle
 
 class CardGame():
    def __init__(self, deck_count):
@@ -14,13 +13,6 @@ class CardGame():
        self.deck.append('K')
        self.deck.append('A')
        return self.deck*self.deck_count
-
-   def show_deck(self, deck):
-       print(self.deck)
-
-   def shuffle_deck(self, deck):
-       shuffle(self.deck)
-       print(self.deck)
 
    def replay(self):
        return input("Do you want to play again? Y/N ").lower().startswith('y')
@@ -53,7 +45,7 @@ class Blackjack(CardGame):
     def win_check(self, score):
         return score == 21
 
-    def first_deal(self):
+    def first_deal(self, ):
         pass
 
 
@@ -75,9 +67,11 @@ class Player():
             else:
                 self.total += 10
         if self.total >= 22 and 'A' in self.hand:
-            self.total -= 10
+            self.total -= 10*self.hand.count('A')
         return self.total
 
+    def player_first_deal(self):
+        pass
 
 bj1 = Blackjack(1)
 deck1 = bj1.create_deck()
@@ -85,7 +79,6 @@ deck1 = bj1.create_deck()
 player1 = Player('Apple')
 
 dealer = Player('Dealer')
-
 
 def main_fcn(deck, player, bj):
 
@@ -106,18 +99,13 @@ def main_fcn(deck, player, bj):
 
         acard1 = bj.choose_card(deck)
         player.hand.append(acard1)
-        #aval1 = bj.return_card_val(acard1)
-
         acard2 = bj.choose_card(deck)
         player.hand.append(acard2)
-        #aval2 = bj.return_card_val(acard2)
-
         total = player.add_score()
 
-        print(f"Current hand {player.hand}")
+        print(f"Current Hand {player.hand}")
         print(f"Player Total: {total}")
         print("-"*25)
-
 
         if bj.win_check(player.total):
             player.add_score()
@@ -134,14 +122,6 @@ def main_fcn(deck, player, bj):
 
                     acard3 = bj.choose_card(deck)
                     player.hand.append(acard3)
-                    aval3 = bj.return_card_val(acard3)
-
-                    #if acard3 == 'A' and player.total > 21:
-                        #aval3 = 11
-                    #else:
-                    #    aval3 = bj.return_card_val(acard3)
-
-                    print(f"Card: {acard3} Value: {aval3}")
                     total = player.add_score()
 
                     print(f"Current hand {player.hand}")
@@ -151,53 +131,49 @@ def main_fcn(deck, player, bj):
                         player.add_score()
                         print('You win!')
                         game_on = False
+                        break
 
                 elif hs_choice == 0:
 
                     dealer.hand = []
                     dealer.total = 0
 
-                    bcard1 = bj.choose_card(deck)
-                    dealer.hand.append(bcard1)
-                    bval1 = bj.return_card_val(bcard1)
-
-                    acard2 = bj.choose_card(deck)
-                    dealer.hand.append(acard2)
-                    bval2 = bj.return_card_val(acard2)
-
-                    total = dealer.add_score()
-                    print(f"Dealer Hand {dealer.hand}")
-                    print(f"Dealer Total: {total}")
-
                     while dealer.total <= 17:
                         bcard3 = bj.choose_card(deck)
                         dealer.hand.append(bcard3)
                         total = dealer.add_score()
+                        print(f"Dealer Hand {dealer.hand}")
+                        print(f"Dealer Total: {total}")
 
+                    else:
                         if bj.win_check(dealer.total):
-                            print('You win!')
+                            print('Dealer wins!')
                             game_on = False
                             break
+
                         elif (dealer.total > player.total) and (dealer.total <= 21):
                             print('Dealer wins!')
                             game_on = False
                             break
+
                         elif dealer.total == player.total:
                             print("Tie Game!")
                             game_on = False
                             break
+
                         else:
                             print('Player wins!')
                             game_on = False
                             break
-                    else:
-                        game_on = False
+
+                    #else:
+                     #   game_on = False
+                else:
+                    game_on = False
             else:
                 print('You lose!')
                 print(' ')
-                if not bj.replay():
-                    print("-" * 25)
-                    game_on = False
+                game_on = False
     else:
         print('Goodbye')
 
