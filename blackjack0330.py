@@ -13,8 +13,6 @@ class CardGame():
        self.deck.append('K')
        self.deck.append('A')
        return self.deck*self.deck_count
-       # [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J','Q','K', 'A']
-       # [0, 1, 2, 3, 4, 5, 6, 7,  8,  9, 10, 11, 12,]
 
    def replay(self):
        return input("Do you want to play again? Y/N ").lower().startswith('y')
@@ -79,6 +77,7 @@ bj1 = Blackjack(1)
 deck1 = bj1.create_deck()
 
 player1 = Player('Apple')
+
 dealer = Player('Dealer')
 
 def main_fcn(deck, player, bj):
