@@ -1,6 +1,7 @@
 from random import randint
 import blackjack_helper
 
+
 class CardGame():
    def __init__(self, deck_count):
        self.deck_count = deck_count
@@ -24,8 +25,8 @@ class Blackjack(CardGame):
 
     def choose_card(self):
         rand_num1 = randint(0, len(self.deck) - 1)
-        a = self.deck[rand_num1]
-        return a
+        card = self.deck[rand_num1]
+        return card
 
     def hit_stay(self):
         hs_op = int(input('Enter 1 to hit or 0 to stay: '))
@@ -100,17 +101,18 @@ class Player():
                 self.total += 11
             else:
                 self.total += 10
-        if self.total >= 22 and 'A' in self.hand:
-            self.total -= 10*self.hand.count('A')
+        while self.total >= 22 and 'A' in self.hand:
+            self.total  -= 10
+        #if self.total >= 22 and 'A' in self.hand:
+         #   self.total -= 10*self.hand.count('A')
         return self.total
 
-'''
 bj1 = Blackjack(1)
 deck1 = bj1.create_deck()
 
 player1 = Player('Apple')
 dealer = Player('Dealer')
-'''
+
 def main_fcn(deck, player, bj):
     game_on = True
     while game_on:
@@ -120,6 +122,7 @@ def main_fcn(deck, player, bj):
         player.add_score()
         bj.print_hand_total(player)
         if player.total == 21:
+            print("Player wins!")
             game_on = False
             break
         elif player.total < 21:
@@ -143,24 +146,26 @@ def main_fcn(deck, player, bj):
                         dealer.add_score()
                         bj.print_hand_total_dealer(dealer)
                     else:
-                        if bj.dealer.total != 21:
+                        if dealer.total != 21:
                             bj.compare(player, dealer)
                             game_on = False
                             break
                 else:
                     hs_choice = bj.hit_stay()
             else:
-                if bj.lose_check_player(player.total):
+                if player.total > 21:
+                    print("Player loses!")
                     game_on = False
-
         elif player.total > 21:
+            print("Player loses!")
             game_on = False
 
-#main_fcn(deck1, player1, bj1)
-
+main_fcn(deck1, player1, bj1)
+'''
 if __name__ == "__main__":
     bj1 = Blackjack(1)
     deck1 = bj1.create_deck()
     player1 = Player('Apple')
     dealer = Player('Dealer')
     main_fcn(deck1, player1, bj1)
+'''

@@ -1,6 +1,6 @@
 import unittest
-from blackjack0331 import Blackjack
-from blackjack0331 import Player
+from blackjack import Blackjack
+from blackjack import Player
 from unittest import mock
 
 
@@ -13,10 +13,12 @@ class TestCardGame(unittest.TestCase):
         with mock.patch("blackjack0331.randint", return_value = 0):
             self.assertEqual(self.bj.choose_card(),'A')   
 
-    def test_choose_card(self):
         self.bj.deck = ['A',1]
         with mock.patch("blackjack0331.randint", return_value = 1):
             self.assertEqual(self.bj.choose_card(),1)
+
+    def test_hit_stay(self):
+        pass
 
     ''' 
     Can also do above using following:
@@ -46,15 +48,6 @@ class TestPlayer(unittest.TestCase):
 
     def test_add_score(self):
         self.assertEqual(self.pl.add_score(), 11)
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':
